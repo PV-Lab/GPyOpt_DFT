@@ -1,0 +1,27 @@
+{
+    "language"        : "PYTHON",
+    "main-file"       : "branin.py",
+    "experiment-name" : "simple-branin",
+    "likelihood"      : "gaussian",
+    "resources": {
+        "maximum-iterations" :  1,
+        "max-run-time": "NA"
+    },
+    "space" : [
+        {   "name" : "y",
+            "type" : "continuous",
+            "domain": "(-2,5)",
+            "dimensionality": "1"
+        },
+        {
+            "name" : "x",
+            "type" : "continuous",
+            "domain": "(0,5)",
+            "dimensionality": "1"
+        }
+    ],
+    "constraints": [],
+    "output":{
+        "verbosity": true
+    }
+}
