@@ -48,11 +48,6 @@ pip install -r requirements.txt
 ```
 
 
-Funding Acknowledgements
-========================
-* [BBSRC Project No BB/K011197/1](http://staffwww.dcs.shef.ac.uk/people/N.Lawrence/projects/recombinant/) "Linking recombinant gene sequence to protein product manufacturability using CHO cell genomic resources"
-
-* See GPy funding Acknowledgements
 
 
 
