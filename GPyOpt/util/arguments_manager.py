@@ -51,6 +51,8 @@ class ArgumentsManager(object):
         cost_withGradients = cost_withGradients
         acquisition_jitter = self.kwargs.get('acquisition_jitter',0.01)
         acquisition_weight = self.kwargs.get('acquisition_weight',2)
+        files = self.kwargs.get('files')
+    
 
         # --- Choose the acquisition
         if acquisition_type is  None or acquisition_type =='EI':
@@ -72,7 +74,7 @@ class ArgumentsManager(object):
             return AcquisitionLCB_MCMC(model, space, acquisition_optimizer, None, acquisition_weight)
 
         elif acquisition_type == 'EI_DFT':
-            return AcquisitionEI_DFT(model, space, acquisition_optimizer, cost_withGradients, acquisition_jitter)
+            return AcquisitionEI_DFT(model, space, files, acquisition_optimizer, cost_withGradients, acquisition_jitter)
         else:
             raise Exception('Invalid acquisition selected.')
 

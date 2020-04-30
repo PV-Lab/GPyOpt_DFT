@@ -18,6 +18,9 @@ from ..models.input_warped_gpmodel import InputWarpedGPModel
 from ..optimization.acquisition_optimizer import AcquisitionOptimizer
 import GPyOpt
 
+#import sys
+#sys.path.append("..")
+
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -85,6 +88,7 @@ class BayesianOptimization(BO):
         self.model_update_interval = model_update_interval
         self.de_duplication = de_duplication
         self.kwargs = kwargs
+        #self.files = files
 
         # --- Handle the arguments passed via kwargs
         self.problem_config = ArgumentsManager(kwargs)
@@ -153,16 +157,16 @@ class BayesianOptimization(BO):
                 self.acquisition = self._acquisition_chooser()
         else:
             self.acquisition = self.acquisition = self._acquisition_chooser()
-
-
+            
         # --- CHOOSE evaluator method
         self.evaluator_type = evaluator_type
         self.evaluator = self._evaluator_chooser()
-
+                
         # --- Create optimization space
         super(BayesianOptimization,self).__init__(  model                  = self.model,
                                                     space                  = self.space,
                                                     objective              = self.objective,
+#                                                    files                  = self.files,
                                                     acquisition            = self.acquisition,
                                                     evaluator              = self.evaluator,
                                                     X_init                 = self.X,
