@@ -24,16 +24,17 @@ class AcquisitionEI_DFT(AcquisitionBase):
 
     analytical_gradient_prediction = True
 
-    def __init__(self, model, space, optimizer=None, cost_withGradients=None, jitter=0.01):
+    def __init__(self, model, space, files, optimizer=None, cost_withGradients=None, jitter=0.01):
         self.optimizer = optimizer
         super(AcquisitionEI_DFT, self).__init__(model, space, optimizer, cost_withGradients=cost_withGradients)
         self.jitter = jitter
-        self.constraint_model = GP_model()  # Added
+        self.constraint_model = GP_model(files)  # Added
+        self.files = files
     
 
     @staticmethod
-    def fromConfig(model, space, optimizer, cost_withGradients, config):
-        return AcquisitionEI_DFT(model, space, optimizer, cost_withGradients, jitter=config['jitter'])
+    def fromConfig(model, space, files, optimizer, cost_withGradients, config):
+        return AcquisitionEI_DFT(model, space, files, optimizer, cost_withGradients, jitter=config['jitter'])
 
     def _compute_acq(self, x):
         """
@@ -67,32 +68,19 @@ class AcquisitionEI_DFT(AcquisitionBase):
         return f_acqu, df_acqu
 
 # Added the rest of the file.
-def GP_model():
-    #file_CsFA = './phasestability/CsFA/fulldata/CsFA_T300_below.csv' # 300K = 26.85C
-    #file_FAMA = './phasestability/FAMA/fulldata/FAMA_T300_below.csv' # 300K = 26.85C
-    #file_CsMA = './phasestability/CsMA/fulldata/CsMA_T300_below.csv' # 300K = 26.85C
-    file_CsFA_2 = '/Users/Shreyaa/Desktop/Campaign-2.0-Bayesian-Opt/phasestability/CsFA/fulldata/CsFA_T300_above.csv'#'./phasestability/CsFA/fulldata/CsFA_T300_above.csv' # 300K = 26.85C
-    file_FAMA_2 = '/Users/Shreyaa/Desktop/Campaign-2.0-Bayesian-Opt/phasestability/FAMA/fulldata/FAMA_T300_above.csv'#'./phasestability/FAMA/fulldata/FAMA_T300_above.csv' # 300K = 26.85C
-    file_CsMA_2 = '/Users/Shreyaa/Desktop/Campaign-2.0-Bayesian-Opt/phasestability/CsMA/fulldata/CsMA_T300_above.csv'#'./phasestability/CsMA/fulldata/CsMA_T300_above.csv' # 300K = 26.85C
-#    file_CsFA_2 = '/home/armi/Dropbox (MIT)/Armiwork2019/2019/Python-koodit/BayesianOpt/Campaign-2.0-Bayesian-Opt/phasestability/CsFA/fulldata/CsFA_T300_above.csv'#'./phasestability/CsFA/fulldata/CsFA_T300_above.csv' # 300K = 26.85C
-#    file_FAMA_2 = '/home/armi/Dropbox (MIT)/Armiwork2019/2019/Python-koodit/BayesianOpt/Campaign-2.0-Bayesian-Opt/phasestability/FAMA/fulldata/FAMA_T300_above.csv'#'./phasestability/FAMA/fulldata/FAMA_T300_above.csv' # 300K = 26.85C
-#    file_CsMA_2 = '/home/armi/Dropbox (MIT)/Armiwork2019/2019/Python-koodit/BayesianOpt/Campaign-2.0-Bayesian-Opt/phasestability/CsMA/fulldata/CsMA_T300_above.csv'#'./phasestability/CsMA/fulldata/CsMA_T300_above.csv' # 300K = 26.85C
-#    file_CsMAFA_2 = '/home/armi/Dropbox (MIT)/Armiwork2019/2019/Python-koodit/BayesianOpt/Campaign-2.0-Bayesian-Opt/phasestability/CsMAFA/fulldata/CsMAFA_T300_above.csv'#'./phasestability/CsMA/fulldata/CsMA_T300_above.csv' # 300K = 26.85C
-#    file_Janak = '/home/armi/Dropbox (MIT)/Armiwork2019/2019/Python-koodit/BayesianOpt/Campaign-2.0-Bayesian-Opt/phasestability/Solubility_XRD.csv'
-    #data_CsFA = pd.read_csv(file_CsFA)
-    #data_FAMA = pd.read_csv(file_FAMA)
-    #data_CsMA = pd.read_csv(file_CsMA)
+def GP_model(files):
+    file_CsFA_2 = files[0]
+    file_FAMA_2 = files[1]
+    file_CsMA_2 = files[2]
+
     data_CsFA_2 = pd.read_csv(file_CsFA_2)
     data_FAMA_2 = pd.read_csv(file_FAMA_2)
     data_CsMA_2 = pd.read_csv(file_CsMA_2)
-#    data_CsMAFA_2 = pd.read_csv(file_CsMAFA_2)
-#    data_Janak = pd.read_csv(file_Janak)
-    #data_all = pd.concat([data_CsFA_2, data_FAMA_2, data_CsMA_2])# Above version is more meaningful for us!
+
     data_all = pd.concat([data_CsFA_2, data_FAMA_2, data_CsMA_2])#, data_CsMAFA_2])#, data_Janak]) # This includes Janak's observations. It's either this or the previous row.
     # TO DO: Newest Bayesian Opt version works for any order of elements. Need
     # to update also DFT to do that one at some point.
     variables = ['Cs', 'MA', 'FA']
-    #print('Janak')
     # sample inputs and outputs
     X = data_all[variables] # This is 3D input
     Y = data_all[['dGmix (ev/f.u.)']] # Negative value: stable phase. Uncertainty = 0.025 
