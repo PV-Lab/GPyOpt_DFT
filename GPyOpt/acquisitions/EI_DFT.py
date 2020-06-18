@@ -1,6 +1,9 @@
 # Copyright (c) 2016, the GPyOpt Authors
 # Licensed under the BSD 3-clause license (see LICENSE.txt)
 
+# Authors: 	Armi Tiihonen, Felipe Oviedo, Shreyaa Raghavan, Zhe Liu
+# MIT Photovoltaics Laboratory
+
 import pandas as pd  # Added
 import numpy as np  # Added
 import GPy  # Added
