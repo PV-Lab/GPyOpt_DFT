@@ -27,7 +27,7 @@ Getting started
 Clone the repository in GitHub and add it to your $PYTHONPATH.
 
 ```bash
-    git clone https://github.com/srags/GPyOpt_DFT.git
+    git clone https://github.com/PV-Lab/GPyOpt_DFT.git
     cd GPyOpt_DFT
     python setup.py install
 ```
