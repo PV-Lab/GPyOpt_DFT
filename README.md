@@ -1,7 +1,7 @@
 GPyOpt_DFT
 ===========
 
-This is an extended version GPyOpt package [GPyOpt homepage](http://sheffieldml.github.io/GPyOpt/). A new acquisition function utilizing DFT data, EI_DFT, has been added to the package. This acqusition function is designed to be used for optimizing ternary MAPbI/FAPbI/CsPbI perovskite mixtures. The description of the original GPyOpt repository follows.
+This is an fork of GPyOpt package [GPyOpt homepage](http://sheffieldml.github.io/GPyOpt/). A new acquisition function utilizing DFT data, EI_DFT, has been added to the package. This acqusition function is designed to be used for optimizing ternary MAPbI/FAPbI/CsPbI perovskite mixtures. The description of the original GPyOpt repository follows.
 
 Gaussian process optimization using [GPy](http://sheffieldml.github.io/GPy/). Performs global optimization with different acquisition functions. Among other functionalities, it is possible to use GPyOpt to optimize physical experiments (sequentially or in batches) and tune the parameters of Machine Learning algorithms. It is able to handle large data sets via sparse Gaussian process models.
 
